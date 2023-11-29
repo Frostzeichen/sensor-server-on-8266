@@ -2,6 +2,7 @@
 #include <ESP8266WiFi.h>
 #include <WiFiServer.h>
 #include "env.h" // Custom environment header.
+#include "prepareJSON.h"
 
 String ssid = ENVSSID;
 String password = ENVPASS;
@@ -10,21 +11,6 @@ String header;
 
 int ledPin = LED_BUILTIN;
 int photoResistorPin = A0;
-
-String prepareJSON() {
-  String htmlPage;
-  htmlPage.reserve(1024);
-  htmlPage = F("HTTP/1.1 200 OK\r\n"
-               "Content-Type: application/json\r\n"
-               "Connection: close\r\n"
-               "Refresh: 5\r\n"
-               "\r\n"
-               "{\"photoresistor\":");
-  htmlPage += analogRead(A0);
-  htmlPage += F("}"
-                "\r\n");
-  return htmlPage;
-}
 
 void setup() {
   Serial.begin(9600);
